@@ -1,0 +1,81 @@
+@startuml Jogodefutebol
+
+class Partida{
+    -dataa: date
+    -timeCasa: time
+    -timeVisitante: time
+    -placarCasa: int
+    -placarVisitante: int
+    -cartaovermelho: int
+    -cartaoAmarelo: int
+
+    +Partida()
+    +golCasa()
+    +golVisitante()
+    +getPlacar(): string
+    +getJuiz(): string
+}
+
+class Time{
+    -nome: string
+    -jogador: jogadores
+    -vitorias: int
+    -derrotas: int
+    -empates: int
+
+    +Time()
+    +getnome(): string
+    +getresultado(): string
+    +imprimeJogadores()
+    +somaVitoria()
+    +somaDerrota()
+    +somaEmpate()
+}
+
+class Jogador{
+    -nome: string
+    -idade: int
+    -gols: int
+    -camisa: int
+    -posicao: string
+
+    +Jogador()
+    +getnome(): string
+    +getidade(): int
+    +getgols(): int
+    +gethabilidade(): int
+    +setnome(): int
+}
+
+class juiz{
+    -nome: string
+    -idade: int
+
+    +juiz()
+    +getnome(): string
+    +getidade(): int
+    +setnome(): int
+}
+
+
+' scale 600 width
+
+' [*] -> State1
+' State1 --> State2 : Succeeded
+' State1 --> [*] : Aborted
+' State2 --> State3 : Succeeded
+' State2 --> [*] : Aborted
+' state State3 {
+'   state "Accumulate Enough Data\nLong State Name" as long1
+'   long1 : Just a test
+'   [*] --> long1
+'   long1 --> long1 : New Data
+'   long1 --> ProcessData : Enough Data
+' }
+' State3 --> State3 : Failed
+' State3 --> [*] : Succeeded / Save Result
+' State3 --> [*] : Aborted
+
+@enduml
+
+
