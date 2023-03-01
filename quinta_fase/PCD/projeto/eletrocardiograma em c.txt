@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main(int argc, char *argv[]) {
+    FILE *arquivo;
+    FILE *arquivo_saida;
+    int intervalo = atoi(argv[2]);
+    double valor;
+    double distancia_minima;
+    int i, j, k;
+    int tamanho_array;
+    int tamanho_subarray;
+    double calculo;
+    char linha[50];
+    double *valores;
+    double *subarray;
+    double *subarray2;
+    double *menores_distancias;
+
+    // Abre o arquivo para leitura
+    arquivo = fopen(argv[1], "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir arquivo.\n");
+        return 1;
+    }
+
+    // Lê os valores do arquivo e armazena em um array
+    valores = malloc(sizeof(double));
+    tamanho_array = 0;
+    while (fgets(linha, 50, arquivo)) {
+        valor = atof(linha);
+        valores = realloc(valores, (tamanho_array + 1) * sizeof(double));
+        valores[tamanho_array] = valor;
+        tamanho_array++;
+    }
+
+    fclose(arquivo);
+
+    // Calcula as menores distâncias
+    menores_distancias = malloc((tamanho_array - intervalo + 1) * sizeof(double));
+    for (i = 0; i < tamanho_array - intervalo + 1; i++) {
+        subarray = malloc(intervalo * sizeof(double));
+        for (j = 0; j < intervalo; j++) {
+            subarray[j] = valores[i + j];
+        }
+        distancia_minima = INFINITY;
+        for (k = 0; k < tamanho_array - intervalo + 1; k++) {
+            subarray2 = malloc(intervalo * sizeof(double));
+            for (j = 0; j < intervalo; j++) {
+                subarray2[j] = valores[k + j];
+            }
+            calculo = 0;
+            for (j = 0; j < intervalo; j++) {
+                calculo += pow(subarray[j] - subarray2[j], 2);
+            }
+            calculo = sqrt(calculo);
+            if (calculo < distancia_minima && calculo != 0) {
+                distancia_minima = round(calculo * 10.0) / 10.0;
+            }
+            free(subarray2);
+        }
+        menores_distancias[i] = distancia_minima;
+        free(subarray);
+    }
+
+    // Abre o arquivo para escrita
+    arquivo_saida = fopen("menores_distancias.txt", "w");
+
+    if (arquivo_saida == NULL) {
+        printf("Erro ao criar arquivo de saída.\n");
+        return 1;
+    }
+
+    // Escreve as menores distâncias no arquivo
+    for (i = 0; i < tamanho_array - intervalo + 1; i++) {
+        fprintf(arquivo_saida, "%.1lf\n", menores_distancias[i]);
+    }
+
+    fclose(arquivo_saida);
+
+    // Libera a memória alocada
+    free(valores);
+    free(menores_distancias);
+
+    return 0;
+}

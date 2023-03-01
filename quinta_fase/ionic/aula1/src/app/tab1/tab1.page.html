@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Tab 1
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h1>Danilo</h1>
+  <ion-item>
+    <ion-label> Digite seu nome: </ion-label>
+    <ion-input placeholder="Seu nome " [(ngModel)]="nome"></ion-input>
+  </ion-item>
+
+  <!-- comunicação unidirecional com typescript -->
+  <ion-label>{{nome}}</ion-label>
+
+</ion-content>

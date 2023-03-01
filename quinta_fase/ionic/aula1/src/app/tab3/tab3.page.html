@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Tab 3
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-label>Peso:
+    <ion-input placeholder="Digite seu peso" [(ngModel)]="peso"></ion-input>
+  </ion-label>
+  <ion-label>Altura:
+    <ion-input placeholder="Digite sua Altura" [(ngModel)]="altura"></ion-input>
+  </ion-label>
+  <ion-button (click)="calculaIMC()">Calcula IMC</ion-button>
+  <p>
+    <ion-label>IMC: {{imc}}</ion-label>
+  </p>
+
+  <app-explore-container name="Tab 3 page"></app-explore-container>
+</ion-content>
